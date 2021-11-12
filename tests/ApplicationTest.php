@@ -30,7 +30,7 @@ use Yiisoft\Yii\Http\Event\ApplicationShutdown;
 use Yiisoft\Yii\Http\Event\ApplicationStartup;
 use Yiisoft\Yii\Http\Event\BeforeRequest;
 use Yiisoft\Yii\Http\Application;
-use Yiisoft\Yii\Http\NotFoundHandler;
+use Yiisoft\Yii\Http\Handler\NotFoundHandler;
 
 final class ApplicationTest extends TestCase
 {

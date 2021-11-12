@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Http;
+namespace Yiisoft\Yii\Http\Handler;
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Status;
 
 /**
- * NotFoundHandler is used as a fallback handler by default {@see Application}.
+ * NotFoundHandler is used as a fallback handler by default {@see \Yiisoft\Yii\Http\Application}.
  */
 final class NotFoundHandler implements RequestHandlerInterface
 {
