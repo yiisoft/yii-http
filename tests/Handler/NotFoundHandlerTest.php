@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Http\Tests;
+namespace Yiisoft\Yii\Http\Handler\Tests;
 
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\ServerRequestFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\Http\Method;
-use Yiisoft\Yii\Http\NotFoundHandler;
+use Yiisoft\Yii\Http\Handler\NotFoundHandler;
 
 final class NotFoundHandlerTest extends TestCase
 {
