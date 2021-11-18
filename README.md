@@ -15,7 +15,9 @@
 [![static analysis](https://github.com/yiisoft/yii-http/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/yii-http/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yiisoft/yii-http/coverage.svg)](https://shepherd.dev/github/yiisoft/yii-http)
 
-The package ...
+This Yii framework package provides the application class, as well as the events
+and handlers needed to interact with HTTP. The package is implemented using
+[PSR-7](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-7-http-message.md) interfaces.
 
 ## Requirements
 
@@ -30,6 +32,48 @@ composer require yiisoft/yii-http --prefer-dist
 ```
 
 ## General usage
+
+In case you use one of the Yii 3 standard application templates, then the application is already configured
+there and is running using [yiisoft/yii-runner-http](https://github.com/yiisoft/yii-runner-http) package.
+
+If not, then use one of the HTTP runners that is suitable for your environment:
+
+- [HTTP](https://github.com/yiisoft/yii-runner-http)
+- [RoadRunner](https://github.com/yiisoft/yii-runner-roadrunner)
+
+and create an entry script as described in readme of the packages.
+
+If you do not use Yii HTTP runners, then the code for launching the application in your entry script may look like this:
+
+```php
+use Yiisoft\Yii\Http\Application;
+use Yiisoft\Yii\Http\Handler\NotFoundHandler;
+use Yiisoft\Yii\Http\Handler\ThrowableHandler;
+
+/**
+ * @var Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher
+ * @var Psr\Http\Message\ResponseFactoryInterface $responseFactory
+ * @var Psr\Http\Message\ServerRequestInterface $request
+ * @var Yiisoft\ErrorHandler\Middleware\ErrorCatcher $errorCatcher
+ * @var Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher $dispatcher
+ */
+
+$fallbackHandler = new NotFoundHandler($responseFactory);
+$application = new Application($dispatcher, $eventDispatcher, $fallbackHandler);
+
+try {
+    $application->start();
+    $response = $application->handle($request);
+    // Emit a response.
+} catch (Throwable $throwable) {
+    $handler = new ThrowableHandler($throwable);
+    $response = $errorCatcher->process($request, $handler);
+    // Emit a response with information about the error.
+} finally {
+    $application->afterEmit($response ?? null);
+    $application->shutdown();
+}
+```
 
 ## Testing
 
