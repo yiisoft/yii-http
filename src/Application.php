@@ -28,6 +28,12 @@ final class Application
     private EventDispatcherInterface $eventDispatcher;
     private RequestHandlerInterface $fallbackHandler;
 
+    /**
+     * @param MiddlewareDispatcher $dispatcher The middleware dispatcher instance.
+     * @param EventDispatcherInterface $eventDispatcher The event dispatcher instance.
+     * @param RequestHandlerInterface $fallbackHandler The fallback handler that will be called
+     * if no response was returned during request handling.
+     */
     public function __construct(
         MiddlewareDispatcher $dispatcher,
         EventDispatcherInterface $eventDispatcher,
@@ -38,21 +44,41 @@ final class Application
         $this->fallbackHandler = $fallbackHandler;
     }
 
+    /**
+     * Dispatches an event {@see ApplicationStartup} to all relevant listeners for processing.
+     */
     public function start(): void
     {
         $this->eventDispatcher->dispatch(new ApplicationStartup());
     }
 
+    /**
+     * Dispatches an event {@see ApplicationShutdown} to all relevant listeners for processing.
+     */
     public function shutdown(): void
     {
         $this->eventDispatcher->dispatch(new ApplicationShutdown());
     }
 
+    /**
+     * Dispatches an event {@see AfterEmit} to all relevant listeners for processing.
+     *
+     * @param ResponseInterface|null $response Response instance or null if response generation failed due to an error.
+     */
     public function afterEmit(?ResponseInterface $response): void
     {
         $this->eventDispatcher->dispatch(new AfterEmit($response));
     }
 
+    /**
+     * Handles a request by passing it through the middleware stack {@see MiddlewareDispatcher} and returns a response.
+     *
+     * Dispatches {@see BeforeRequest} and {@see AfterRequest} events to all relevant listeners for processing.
+     *
+     * @param ServerRequestInterface $request The request instance to handle.
+     *
+     * @return ResponseInterface The resulting instance of the response.
+     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $this->eventDispatcher->dispatch(new BeforeRequest($request));
