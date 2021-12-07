@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Runner\Http\Tests;
+namespace Yiisoft\Yii\Http\Tests;
 
 use Exception;
 use HttpSoft\Message\ResponseFactory;
