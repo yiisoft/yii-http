@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yiisoft\Yii\Http\Handler\Tests;
+namespace Yiisoft\Yii\Http\Tests\Handler;
 
 use HttpSoft\Message\ServerRequest;
 use PHPUnit\Framework\TestCase;
