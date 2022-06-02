@@ -37,37 +37,51 @@ final class ApplicationTest extends TestCase
     public function testStartMethodDispatchEvent(): void
     {
         $eventDispatcher = new SimpleEventDispatcher();
-        $this->createApplication($eventDispatcher)->start();
+        $this
+            ->createApplication($eventDispatcher)
+            ->start();
         $this->assertSame([ApplicationStartup::class], $eventDispatcher->getEventClasses());
     }
 
     public function testShutdownMethodDispatchEvent(): void
     {
         $eventDispatcher = new SimpleEventDispatcher();
-        $this->createApplication($eventDispatcher)->shutdown();
+        $this
+            ->createApplication($eventDispatcher)
+            ->shutdown();
         $this->assertSame([ApplicationShutdown::class], $eventDispatcher->getEventClasses());
     }
 
     public function testAfterEmitMethodDispatchEvent(): void
     {
         $eventDispatcher = new SimpleEventDispatcher();
-        $this->createApplication($eventDispatcher)->afterEmit(null);
+        $this
+            ->createApplication($eventDispatcher)
+            ->afterEmit(null);
         $this->assertSame([AfterEmit::class], $eventDispatcher->getEventClasses());
-        $this->assertNull($eventDispatcher->getEvents()[0]->getResponse());
+        $this->assertNull($eventDispatcher
+            ->getEvents()
+            ->getResponse());
     }
 
     public function testAfterEmitMethodWithResponseDispatchEvent(): void
     {
         $eventDispatcher = new SimpleEventDispatcher();
-        $this->createApplication($eventDispatcher)->afterEmit(new Response());
+        $this
+            ->createApplication($eventDispatcher)
+            ->afterEmit(new Response());
         $this->assertSame([AfterEmit::class], $eventDispatcher->getEventClasses());
-        $this->assertInstanceOf(Response::class, $eventDispatcher->getEvents()[0]->getResponse());
+        $this->assertInstanceOf(Response::class, $eventDispatcher
+            ->getEvents()
+            ->getResponse());
     }
 
     public function testHandleMethodDispatchEvents(): void
     {
         $eventDispatcher = new SimpleEventDispatcher();
-        $response = $this->createApplication($eventDispatcher, Status::NOT_FOUND)->handle($this->createRequest());
+        $response = $this
+            ->createApplication($eventDispatcher, Status::NOT_FOUND)
+            ->handle($this->createRequest());
 
         $this->assertSame(
             [
@@ -87,7 +101,9 @@ final class ApplicationTest extends TestCase
         $eventDispatcher = new SimpleEventDispatcher();
 
         try {
-            $this->createApplication($eventDispatcher, Status::OK, true)->handle($this->createRequest());
+            $this
+                ->createApplication($eventDispatcher, Status::OK, true)
+                ->handle($this->createRequest());
         } catch (Exception $e) {
         }
 
@@ -105,10 +121,16 @@ final class ApplicationTest extends TestCase
     public function testBeforeAndAfterRequestWithResponseDispatchEvent(): void
     {
         $eventDispatcher = new SimpleEventDispatcher();
-        $this->createApplication($eventDispatcher)->handle($this->createRequest());
+        $this
+            ->createApplication($eventDispatcher)
+            ->handle($this->createRequest());
         $this->assertCount(4, $eventDispatcher->getEvents());
-        $this->assertInstanceOf(ServerRequestInterface::class, $eventDispatcher->getEvents()[0]->getRequest());
-        $this->assertInstanceOf(ResponseInterface::class, $eventDispatcher->getEvents()[3]->getResponse());
+        $this->assertInstanceOf(ServerRequestInterface::class, $eventDispatcher
+            ->getEvents()
+            ->getRequest());
+        $this->assertInstanceOf(ResponseInterface::class, $eventDispatcher
+            ->getEvents()
+            ->getResponse());
     }
 
     public function testAfterRequestWithExceptionDispatchEvent(): void
@@ -116,12 +138,16 @@ final class ApplicationTest extends TestCase
         $eventDispatcher = new SimpleEventDispatcher();
 
         try {
-            $this->createApplication($eventDispatcher, Status::OK, true)->handle($this->createRequest());
+            $this
+                ->createApplication($eventDispatcher, Status::OK, true)
+                ->handle($this->createRequest());
         } catch (Exception $exception) {
         }
 
         $this->assertCount(4, $eventDispatcher->getEvents());
-        $this->assertNull($eventDispatcher->getEvents()[3]->getResponse());
+        $this->assertNull($eventDispatcher
+            ->getEvents()
+            ->getResponse());
     }
 
     private function createApplication(
