@@ -60,7 +60,7 @@ final class ApplicationTest extends TestCase
             ->afterEmit(null);
         $this->assertSame([AfterEmit::class], $eventDispatcher->getEventClasses());
         $this->assertNull($eventDispatcher
-            ->getEvents()
+            ->getEvents()[0]
             ->getResponse());
     }
 
@@ -72,7 +72,7 @@ final class ApplicationTest extends TestCase
             ->afterEmit(new Response());
         $this->assertSame([AfterEmit::class], $eventDispatcher->getEventClasses());
         $this->assertInstanceOf(Response::class, $eventDispatcher
-            ->getEvents()
+            ->getEvents()[0]
             ->getResponse());
     }
 
@@ -126,10 +126,10 @@ final class ApplicationTest extends TestCase
             ->handle($this->createRequest());
         $this->assertCount(4, $eventDispatcher->getEvents());
         $this->assertInstanceOf(ServerRequestInterface::class, $eventDispatcher
-            ->getEvents()
+            ->getEvents()[0]
             ->getRequest());
         $this->assertInstanceOf(ResponseInterface::class, $eventDispatcher
-            ->getEvents()
+            ->getEvents()[3]
             ->getResponse());
     }
 
@@ -146,7 +146,7 @@ final class ApplicationTest extends TestCase
 
         $this->assertCount(4, $eventDispatcher->getEvents());
         $this->assertNull($eventDispatcher
-            ->getEvents()
+            ->getEvents()[3]
             ->getResponse());
     }
 
