@@ -1,8 +1,8 @@
 # Yii HTTP Application Change Log
 
-## 1.0.1 under development
+## 1.1.0 under development
 
-- no changes in this release.
+- Chg #10: Update `yiisoft/middleware-dispatcher` dependency (@rustamwin)
 
 ## 1.0.0 December 08, 2021
 
