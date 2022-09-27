@@ -11,7 +11,7 @@ final class AfterRequest
     /**
      * @param ResponseInterface|null $response Response instance or null if response generation failed due to an error.
      */
-    public function __construct(private ?\Psr\Http\Message\ResponseInterface $response)
+    public function __construct(private ?ResponseInterface $response)
     {
     }
 

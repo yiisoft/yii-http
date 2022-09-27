@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 
 final class AfterEmit
 {
-    public function __construct(private ?\Psr\Http\Message\ResponseInterface $response)
+    public function __construct(private ?ResponseInterface $response)
     {
     }
 

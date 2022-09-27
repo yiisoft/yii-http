@@ -9,8 +9,6 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Yiisoft\Yii\Http\Handler\ThrowableHandler;
 
-use function get_class;
-
 final class ThrowableHandlerTest extends TestCase
 {
     public function testHandle(): void
