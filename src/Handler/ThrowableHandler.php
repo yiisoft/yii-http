@@ -14,11 +14,8 @@ use Throwable;
  */
 final class ThrowableHandler implements RequestHandlerInterface
 {
-    private Throwable $throwable;
-
-    public function __construct(Throwable $throwable)
+    public function __construct(private Throwable $throwable)
     {
-        $this->throwable = $throwable;
     }
 
     /**
