@@ -18,7 +18,7 @@ final class ThrowableHandlerTest extends TestCase
         $exception = new RuntimeException('Some error.', 0);
         $handler = new ThrowableHandler($exception);
 
-        $this->expectException(get_class($exception));
+        $this->expectException($exception::class);
         $this->expectExceptionCode($exception->getCode());
         $this->expectExceptionMessage($exception->getMessage());
 

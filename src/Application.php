@@ -24,24 +24,14 @@ use Yiisoft\Yii\Http\Event\BeforeRequest;
  */
 final class Application
 {
-    private MiddlewareDispatcher $dispatcher;
-    private EventDispatcherInterface $eventDispatcher;
-    private RequestHandlerInterface $fallbackHandler;
-
     /**
      * @param MiddlewareDispatcher $dispatcher The middleware dispatcher instance.
      * @param EventDispatcherInterface $eventDispatcher The event dispatcher instance.
      * @param RequestHandlerInterface $fallbackHandler The fallback handler that will be called
      * if no response was returned during request handling.
      */
-    public function __construct(
-        MiddlewareDispatcher $dispatcher,
-        EventDispatcherInterface $eventDispatcher,
-        RequestHandlerInterface $fallbackHandler
-    ) {
-        $this->dispatcher = $dispatcher;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->fallbackHandler = $fallbackHandler;
+    public function __construct(private MiddlewareDispatcher $dispatcher, private EventDispatcherInterface $eventDispatcher, private RequestHandlerInterface $fallbackHandler)
+    {
     }
 
     /**

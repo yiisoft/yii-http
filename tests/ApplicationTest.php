@@ -105,7 +105,7 @@ final class ApplicationTest extends TestCase
             $this
                 ->createApplication($eventDispatcher, Status::OK, true)
                 ->handle($this->createRequest());
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
 
         $this->assertSame(
@@ -142,7 +142,7 @@ final class ApplicationTest extends TestCase
             $this
                 ->createApplication($eventDispatcher, Status::OK, true)
                 ->handle($this->createRequest());
-        } catch (Exception $exception) {
+        } catch (Exception) {
         }
 
         $this->assertCount(4, $eventDispatcher->getEvents());
@@ -184,11 +184,8 @@ final class ApplicationTest extends TestCase
         )
         )->withMiddlewares([
             static fn () => new class ($responseCode) implements MiddlewareInterface {
-                private int $responseCode;
-
-                public function __construct(int $responseCode)
+                public function __construct(private int $responseCode)
                 {
-                    $this->responseCode = $responseCode;
                 }
 
                 public function process(
