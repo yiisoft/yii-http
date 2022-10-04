@@ -8,11 +8,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class BeforeRequest
 {
-    private ServerRequestInterface $request;
-
-    public function __construct(ServerRequestInterface $request)
+    public function __construct(private ServerRequestInterface $request)
     {
-        $this->request = $request;
     }
 
     public function getRequest(): ServerRequestInterface
