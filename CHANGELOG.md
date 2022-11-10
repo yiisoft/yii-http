@@ -1,6 +1,6 @@
 # Yii HTTP Application Change Log
 
-## 1.0.2 under development
+## 1.0.2 November 10, 2022
 
 - Enh #14: Add support for `yiisoft/middleware-dispatcher` version `^4.0` (@vjik)
 
