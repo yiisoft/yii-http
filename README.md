@@ -28,7 +28,7 @@ and handlers needed to interact with HTTP. The package is implemented using
 The package could be installed with composer:
 
 ```shell
-composer require yiisoft/yii-http --prefer-dist
+composer require yiisoft/yii-http
 ```
 
 ## General usage
