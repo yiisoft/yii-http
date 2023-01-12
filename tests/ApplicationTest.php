@@ -22,7 +22,6 @@ use Yiisoft\Middleware\Dispatcher\Event\AfterMiddleware;
 use Yiisoft\Middleware\Dispatcher\Event\BeforeMiddleware;
 use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
 use Yiisoft\Middleware\Dispatcher\MiddlewareFactory;
-use Yiisoft\Middleware\Dispatcher\WrapperFactory;
 use Yiisoft\Test\Support\Container\SimpleContainer;
 use Yiisoft\Test\Support\EventDispatcher\SimpleEventDispatcher;
 use Yiisoft\Yii\Http\Event\AfterEmit;
@@ -179,7 +178,7 @@ final class ApplicationTest extends TestCase
         int $responseCode = Status::OK
     ): MiddlewareDispatcher {
         return (new MiddlewareDispatcher(
-            new MiddlewareFactory($container, new WrapperFactory($container)),
+            new MiddlewareFactory($container),
             $container->get(EventDispatcherInterface::class)
         )
         )->withMiddlewares([
@@ -201,7 +200,7 @@ final class ApplicationTest extends TestCase
     private function createMiddlewareDispatcherWithException(ContainerInterface $container): MiddlewareDispatcher
     {
         return (new MiddlewareDispatcher(
-            new MiddlewareFactory($container, new WrapperFactory($container)),
+            new MiddlewareFactory($container),
             $container->get(EventDispatcherInterface::class)
         )
         )->withMiddlewares([
