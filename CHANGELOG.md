@@ -2,7 +2,7 @@
 
 ## 1.0.3 under development
 
-- no changes in this release.
+- Enh #27: Add support for `yiisoft/middleware-dispatcher` version `^5.0` (@rustamwin)
 
 ## 1.0.2 November 10, 2022
 
