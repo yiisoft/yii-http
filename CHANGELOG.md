@@ -1,6 +1,6 @@
 # Yii HTTP Application Change Log
 
-## 1.0.3 under development
+## 1.0.3 January 13, 2023
 
 - Enh #27: Add support for `yiisoft/middleware-dispatcher` version `^5.0` (@rustamwin)
 
