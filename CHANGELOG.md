@@ -2,7 +2,7 @@
 
 ## 1.0.4 under development
 
-- no changes in this release.
+- Enh #33: Add support for `psr/http-message` version `^2.0` (@vjik)
 
 ## 1.0.3 January 13, 2023
 
