@@ -1,6 +1,6 @@
 # Yii HTTP Application Change Log
 
-## 1.0.4 under development
+## 1.0.4 March 07, 2024
 
 - Enh #33: Add support for `psr/http-message` version `^2.0` (@vjik)
 
