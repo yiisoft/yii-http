@@ -14,6 +14,7 @@ use Yiisoft\Yii\Http\Event\AfterRequest;
 use Yiisoft\Yii\Http\Event\ApplicationShutdown;
 use Yiisoft\Yii\Http\Event\ApplicationStartup;
 use Yiisoft\Yii\Http\Event\BeforeRequest;
+use Yiisoft\Yii\Http\Handler\UnhandledRequestHandler;
 
 /**
  * Application is the entry point for an HTTP application.
@@ -30,8 +31,11 @@ final class Application
      * @param RequestHandlerInterface $fallbackHandler The fallback handler that will be called
      * if no response was returned during request handling.
      */
-    public function __construct(private MiddlewareDispatcher $dispatcher, private EventDispatcherInterface $eventDispatcher, private RequestHandlerInterface $fallbackHandler)
-    {
+    public function __construct(
+        private readonly MiddlewareDispatcher $dispatcher,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly RequestHandlerInterface $fallbackHandler = new UnhandledRequestHandler()
+    ) {
     }
 
     /**

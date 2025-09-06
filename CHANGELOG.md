@@ -4,6 +4,7 @@
 
 - Chg #49, #50: Change PHP constraint in `composer.json` to `8.1 - 8.4` (@vjik)
 - Chg #50: Bump minimal PHP version to 8.1 (@vjik)
+- New #51: Introduce `UnhandledRequestHandler` and make `$fallbackHandler` in `Application` optional (@vjik)
 
 ## 1.0.4 March 07, 2024
 
