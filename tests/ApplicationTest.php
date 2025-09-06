@@ -7,6 +7,7 @@ namespace Yiisoft\Yii\Http\Tests;
 use Exception;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\Response;
+use HttpSoft\Message\ServerRequest;
 use HttpSoft\Message\ServerRequestFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -16,6 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RuntimeException;
 use Yiisoft\Http\Method;
 use Yiisoft\Http\Status;
 use Yiisoft\Middleware\Dispatcher\Event\AfterMiddleware;
@@ -228,5 +230,31 @@ final class ApplicationTest extends TestCase
     private function createRequest(): ServerRequestInterface
     {
         return (new ServerRequestFactory())->createServerRequest(Method::GET, 'https://example.com');
+    }
+
+    public function testDefaultFallbackHandler(): void
+    {
+        $eventDispatcher = new SimpleEventDispatcher();
+        $middlewareDispatcher = (new MiddlewareDispatcher(
+            new MiddlewareFactory(
+                new SimpleContainer(),
+            ),
+        ))->withMiddlewares([
+            static fn () => new class () implements MiddlewareInterface {
+                public function process(
+                    ServerRequestInterface $request,
+                    RequestHandlerInterface $handler
+                ): ResponseInterface {
+                    return $handler->handle($request);
+                }
+            },
+        ]);
+        $request = new ServerRequest();
+
+        $application = new Application($middlewareDispatcher, $eventDispatcher);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No response was generated.');
+        $application->handle($request);
     }
 }
