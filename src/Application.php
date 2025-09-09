@@ -19,7 +19,7 @@ use Yiisoft\Yii\Http\Handler\UnhandledRequestHandler;
 /**
  * Application is the entry point for an HTTP application.
  *
- * For more details and usage information on Application, see the guide article on applications:
+ * For more details and usage information on `Application`, see the guide article on applications:
  *
  * @link https://github.com/yiisoft/docs/blob/master/guide/en/structure/application.md
  */
@@ -27,13 +27,13 @@ final class Application
 {
     /**
      * @param MiddlewareDispatcher $dispatcher The middleware dispatcher instance.
-     * @param EventDispatcherInterface $eventDispatcher The event dispatcher instance.
+     * @param EventDispatcherInterface|null $eventDispatcher The event dispatcher instance (optional).
      * @param RequestHandlerInterface $fallbackHandler The fallback handler that will be called
      * if no response was returned during request handling.
      */
     public function __construct(
         private readonly MiddlewareDispatcher $dispatcher,
-        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly EventDispatcherInterface|null $eventDispatcher = null,
         private readonly RequestHandlerInterface $fallbackHandler = new UnhandledRequestHandler()
     ) {
     }
@@ -43,7 +43,7 @@ final class Application
      */
     public function start(): void
     {
-        $this->eventDispatcher->dispatch(new ApplicationStartup());
+        $this->eventDispatcher?->dispatch(new ApplicationStartup());
     }
 
     /**
@@ -51,7 +51,7 @@ final class Application
      */
     public function shutdown(): void
     {
-        $this->eventDispatcher->dispatch(new ApplicationShutdown());
+        $this->eventDispatcher?->dispatch(new ApplicationShutdown());
     }
 
     /**
@@ -61,7 +61,7 @@ final class Application
      */
     public function afterEmit(?ResponseInterface $response): void
     {
-        $this->eventDispatcher->dispatch(new AfterEmit($response));
+        $this->eventDispatcher?->dispatch(new AfterEmit($response));
     }
 
     /**
@@ -75,12 +75,12 @@ final class Application
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $this->eventDispatcher->dispatch(new BeforeRequest($request));
+        $this->eventDispatcher?->dispatch(new BeforeRequest($request));
 
         try {
             return $response = $this->dispatcher->dispatch($request, $this->fallbackHandler);
         } finally {
-            $this->eventDispatcher->dispatch(new AfterRequest($response ?? null));
+            $this->eventDispatcher?->dispatch(new AfterRequest($response ?? null));
         }
     }
 }
