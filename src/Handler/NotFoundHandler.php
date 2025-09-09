@@ -11,12 +11,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Status;
 
 /**
- * NotFoundHandler is used as a fallback handler by default {@see \Yiisoft\Yii\Http\Application}.
+ * `NotFoundHandler` is used as a fallback handler by default {@see \Yiisoft\Yii\Http\Application}.
  */
 final class NotFoundHandler implements RequestHandlerInterface
 {
-    public function __construct(private ResponseFactoryInterface $responseFactory)
-    {
+    public function __construct(
+        private readonly ResponseFactoryInterface $responseFactory,
+    ) {
     }
 
     /**
@@ -26,13 +27,9 @@ final class NotFoundHandler implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $path = $request
-            ->getUri()
-            ->getPath();
+        $path = $request->getUri()->getPath();
         $response = $this->responseFactory->createResponse(Status::NOT_FOUND);
-        $response
-            ->getBody()
-            ->write("We were unable to find the page \"$path\".");
+        $response->getBody()->write("We were unable to find the page \"$path\".");
         return $response;
     }
 }
