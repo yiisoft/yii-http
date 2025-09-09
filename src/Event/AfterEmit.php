@@ -8,10 +8,14 @@ use Psr\Http\Message\ResponseInterface;
 
 final class AfterEmit
 {
-    public function __construct(private ?ResponseInterface $response)
-    {
+    public function __construct(
+        public readonly ResponseInterface|null $response,
+    ) {
     }
 
+    /**
+     * @deprecated Use readonly property instead.
+     */
     public function getResponse(): ?ResponseInterface
     {
         return $this->response;
