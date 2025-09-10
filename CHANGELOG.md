@@ -1,5 +1,9 @@
 # Yii HTTP Application Change Log
 
+## 1.1.1 under development
+
+- no changes in this release.
+
 ## 1.1.0 September 10, 2025
 
 - New #51: Introduce `UnhandledRequestHandler` and make `$fallbackHandler` in `Application` optional (@vjik)
