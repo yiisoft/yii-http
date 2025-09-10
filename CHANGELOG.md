@@ -1,12 +1,12 @@
 # Yii HTTP Application Change Log
 
-## 1.0.5 under development
+## 1.1.0 September 10, 2025
 
+- New #51: Introduce `UnhandledRequestHandler` and make `$fallbackHandler` in `Application` optional (@vjik)
 - Chg #49, #50: Change PHP constraint in `composer.json` to `8.1 - 8.4` (@vjik)
 - Chg #50: Bump minimal PHP version to 8.1 (@vjik)
-- New #51: Introduce `UnhandledRequestHandler` and make `$fallbackHandler` in `Application` optional (@vjik)
-- Enh #53: Refactor classes with readonly properties and deprecate getters (@vjik) 
 - Enh #52: Make event dispatcher optional (@vjik)
+- Enh #53: Refactor classes with readonly properties and deprecate getters (@vjik)
 
 ## 1.0.4 March 07, 2024
 
