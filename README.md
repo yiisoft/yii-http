@@ -20,7 +20,7 @@ and handlers needed to interact with HTTP. The package is implemented using
 
 ## Requirements
 
-- PHP 8.1 or higher.
+- PHP 8.1 - 8.5.
 
 ## Installation
 
