@@ -152,10 +152,36 @@ final class ApplicationTest extends TestCase
             ->getResponse());
     }
 
+    public function testDefaultFallbackHandler(): void
+    {
+        $eventDispatcher = new SimpleEventDispatcher();
+        $middlewareDispatcher = (new MiddlewareDispatcher(
+            new MiddlewareFactory(
+                new SimpleContainer(),
+            ),
+        ))->withMiddlewares([
+            static fn() => new class implements MiddlewareInterface {
+                public function process(
+                    ServerRequestInterface $request,
+                    RequestHandlerInterface $handler,
+                ): ResponseInterface {
+                    return $handler->handle($request);
+                }
+            },
+        ]);
+        $request = new ServerRequest();
+
+        $application = new Application($middlewareDispatcher, $eventDispatcher);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('No response was generated.');
+        $application->handle($request);
+    }
+
     private function createApplication(
         EventDispatcherInterface $eventDispatcher,
         int $responseCode = Status::OK,
-        bool $throwException = false
+        bool $throwException = false,
     ): Application {
         if ($throwException === false) {
             $middlewareDispatcher = $this->createMiddlewareDispatcher(
@@ -164,34 +190,32 @@ final class ApplicationTest extends TestCase
             );
         } else {
             $middlewareDispatcher = $this->createMiddlewareDispatcherWithException(
-                $this->createContainer($eventDispatcher)
+                $this->createContainer($eventDispatcher),
             );
         }
 
         return new Application(
             $middlewareDispatcher,
             $eventDispatcher,
-            new NotFoundHandler(new ResponseFactory())
+            new NotFoundHandler(new ResponseFactory()),
         );
     }
 
     private function createMiddlewareDispatcher(
         ContainerInterface $container,
-        int $responseCode = Status::OK
+        int $responseCode = Status::OK,
     ): MiddlewareDispatcher {
         return (new MiddlewareDispatcher(
             new MiddlewareFactory($container),
-            $container->get(EventDispatcherInterface::class)
+            $container->get(EventDispatcherInterface::class),
         )
         )->withMiddlewares([
-            static fn () => new class ($responseCode) implements MiddlewareInterface {
-                public function __construct(private int $responseCode)
-                {
-                }
+            static fn() => new class ($responseCode) implements MiddlewareInterface {
+                public function __construct(private int $responseCode) {}
 
                 public function process(
                     ServerRequestInterface $request,
-                    RequestHandlerInterface $handler
+                    RequestHandlerInterface $handler,
                 ): ResponseInterface {
                     return new Response($this->responseCode);
                 }
@@ -203,13 +227,13 @@ final class ApplicationTest extends TestCase
     {
         return (new MiddlewareDispatcher(
             new MiddlewareFactory($container),
-            $container->get(EventDispatcherInterface::class)
+            $container->get(EventDispatcherInterface::class),
         )
         )->withMiddlewares([
-            static fn () => new class () implements MiddlewareInterface {
+            static fn() => new class implements MiddlewareInterface {
                 public function process(
                     ServerRequestInterface $request,
-                    RequestHandlerInterface $handler
+                    RequestHandlerInterface $handler,
                 ): ResponseInterface {
                     throw new Exception();
                 }
@@ -223,38 +247,12 @@ final class ApplicationTest extends TestCase
             [
                 ResponseFactoryInterface::class => new ResponseFactory(),
                 EventDispatcherInterface::class => $eventDispatcher,
-            ]
+            ],
         );
     }
 
     private function createRequest(): ServerRequestInterface
     {
         return (new ServerRequestFactory())->createServerRequest(Method::GET, 'https://example.com');
-    }
-
-    public function testDefaultFallbackHandler(): void
-    {
-        $eventDispatcher = new SimpleEventDispatcher();
-        $middlewareDispatcher = (new MiddlewareDispatcher(
-            new MiddlewareFactory(
-                new SimpleContainer(),
-            ),
-        ))->withMiddlewares([
-            static fn () => new class () implements MiddlewareInterface {
-                public function process(
-                    ServerRequestInterface $request,
-                    RequestHandlerInterface $handler
-                ): ResponseInterface {
-                    return $handler->handle($request);
-                }
-            },
-        ]);
-        $request = new ServerRequest();
-
-        $application = new Application($middlewareDispatcher, $eventDispatcher);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No response was generated.');
-        $application->handle($request);
     }
 }

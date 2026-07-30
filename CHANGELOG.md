@@ -2,7 +2,7 @@
 
 ## 1.1.2 under development
 
-- no changes in this release.
+- Enh #61: Explicitly import `Application` class in "use" section in `NotFoundHandler` (@vjik)
 
 ## 1.1.1 December 18, 2025
 

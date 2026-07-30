@@ -10,8 +10,7 @@ final class BeforeRequest
 {
     public function __construct(
         public readonly ServerRequestInterface $request,
-    ) {
-    }
+    ) {}
 
     /**
      * @deprecated Use readonly property instead.

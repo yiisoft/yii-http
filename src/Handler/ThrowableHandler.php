@@ -16,8 +16,7 @@ final class ThrowableHandler implements RequestHandlerInterface
 {
     public function __construct(
         private readonly Throwable $throwable,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws Throwable

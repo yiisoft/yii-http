@@ -9,9 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 final class AfterEmit
 {
     public function __construct(
-        public readonly ResponseInterface|null $response,
-    ) {
-    }
+        public readonly ?ResponseInterface $response,
+    ) {}
 
     /**
      * @deprecated Use readonly property instead.

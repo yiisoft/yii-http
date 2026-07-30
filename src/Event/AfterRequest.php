@@ -12,9 +12,8 @@ final class AfterRequest
      * @param ResponseInterface|null $response Response instance or null if response generation failed due to an error.
      */
     public function __construct(
-        public readonly ResponseInterface|null $response,
-    ) {
-    }
+        public readonly ?ResponseInterface $response,
+    ) {}
 
     /**
      * @deprecated Use readonly property instead.

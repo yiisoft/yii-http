@@ -9,16 +9,16 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Http\Status;
+use Yiisoft\Yii\Http\Application;
 
 /**
- * `NotFoundHandler` is used as a fallback handler by default {@see \Yiisoft\Yii\Http\Application}.
+ * `NotFoundHandler` is used as a fallback handler by default {@see Application}.
  */
 final class NotFoundHandler implements RequestHandlerInterface
 {
     public function __construct(
         private readonly ResponseFactoryInterface $responseFactory,
-    ) {
-    }
+    ) {}
 
     /**
      * Handles a request and produces a response.
