@@ -33,10 +33,9 @@ final class Application
      */
     public function __construct(
         private readonly MiddlewareDispatcher $dispatcher,
-        private readonly EventDispatcherInterface|null $eventDispatcher = null,
-        private readonly RequestHandlerInterface $fallbackHandler = new UnhandledRequestHandler()
-    ) {
-    }
+        private readonly ?EventDispatcherInterface $eventDispatcher = null,
+        private readonly RequestHandlerInterface $fallbackHandler = new UnhandledRequestHandler(),
+    ) {}
 
     /**
      * Dispatches an event {@see ApplicationStartup} to all relevant listeners for processing.
