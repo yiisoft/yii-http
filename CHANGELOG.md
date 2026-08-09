@@ -3,6 +3,7 @@
 ## 1.1.2 under development
 
 - Enh #61: Explicitly import `Application` class in "use" section in `NotFoundHandler` (@vjik)
+- Enh #64: Remove unused `psr/http-server-middleware` dependency (@vjik)
 
 ## 1.1.1 December 18, 2025
 
