@@ -21,7 +21,7 @@ use Yiisoft\Yii\Http\Handler\UnhandledRequestHandler;
  *
  * For more details and usage information on `Application`, see the guide article on applications:
  *
- * @link https://github.com/yiisoft/docs/blob/master/guide/en/structure/application.md
+ * @link https://yiisoft.github.io/docs/guide/structure/application
  */
 final class Application
 {
